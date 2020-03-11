@@ -1,3 +1,8 @@
 /COMP-476-A3/Library
 /COMP-476-A3/Logs
 /COMP-476-A3/Packages
+/COMP-476-A3/Temp
+/COMP-476-A3/obj
+/COMP-476-A3/*.vs
+/COMP-476-A3/*.sln
+/COMP-476-A3/*.csproj
