@@ -6,7 +6,21 @@ using Photon.Realtime;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
-    string gameVersion = "1";
+
+    [Tooltip("The maximum number of players per room. When a room is full it can't be joined by new players.")]
+    [SerializeField]
+    private byte maxPlayersPerRoom = 4;
+
+    [Tooltip("The UI Panel to let the user enter name, connect and play.")]
+    [SerializeField]
+    private GameObject controlPanel;
+
+    [Tooltip("The UI Label to inform the user that the connection is in progress.")]
+    [SerializeField]
+    private GameObject progressLabel;
+
+
+    string gameVersion = "1"; //the game version
 
     private void Awake()
     {
@@ -16,7 +30,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        
+        progressLabel.SetActive(false);
+        controlPanel.SetActive(true);
     }
 
     // Update is called once per frame
@@ -27,28 +42,38 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
+        progressLabel.SetActive(true);
+        controlPanel.SetActive(false);
         if (PhotonNetwork.IsConnected)
-            PhotonNetwork.JoinRandomRoom();
+            PhotonNetwork.JoinRandomRoom(); //if we are connected try to join a random room
         else
         {
-            PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.ConnectUsingSettings(); //if not then try to connect and set the game version
             PhotonNetwork.GameVersion = gameVersion;
         }
     }
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to master.");
+        Debug.Log("Connected to master."); //log that we connected to master room. 
+                                           //this will happen here since only two people are playing the game
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogWarningFormat("Disconnected for reason {0}", cause);
+        progressLabel.SetActive(false);
+        controlPanel.SetActive(true);
+        Debug.LogWarningFormat("Disconnected for reason {0}", cause); //log this if we get accidentally disc. from room
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("No Random Room Available.");
-        PhotonNetwork.CreateRoom(null, new RoomOptions());
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("This client is now in a room");
     }
 }
