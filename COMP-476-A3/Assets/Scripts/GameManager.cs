@@ -17,4 +17,34 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
     }
+
+    public void LoadArena()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            Debug.LogError("Photon Network: Trying to load a level but we are not the master client.");
+        Debug.Log("Loading level...");
+        PhotonNetwork.LoadLevel("TankBattle");
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log(newPlayer.NickName + " entered the room.");
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log(newPlayer.NickName + " is master client.");
+            LoadArena();
+        }
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log(otherPlayer.NickName + " left the room.");
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log(otherPlayer.NickName + " is master client.");
+            LoadArena();
+        }
+    }
 }

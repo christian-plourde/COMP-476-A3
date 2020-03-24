@@ -19,6 +19,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject progressLabel;
 
+    bool isConnecting;
+
 
     string gameVersion = "1"; //the game version
 
@@ -42,6 +44,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
+        isConnecting = PhotonNetwork.ConnectUsingSettings();
         progressLabel.SetActive(true);
         controlPanel.SetActive(false);
         if (PhotonNetwork.IsConnected)
@@ -57,6 +60,12 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected to master."); //log that we connected to master room. 
                                            //this will happen here since only two people are playing the game
+        if(isConnecting)
+        {
+            PhotonNetwork.JoinRandomRoom();
+            isConnecting = false;
+        }
+        
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -74,6 +83,13 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("This client is now in a room");
+        Debug.Log("This client is now in a room.");
+
+        if(PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            Debug.Log("Loading arena...");
+
+            PhotonNetwork.LoadLevel("TankBattle");
+        }
     }
 }
