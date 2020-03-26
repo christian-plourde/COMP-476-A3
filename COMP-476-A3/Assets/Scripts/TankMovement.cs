@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using System;
 
 public class TankMovement : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class TankMovement : MonoBehaviour
     [Tooltip("The rotation speed of the tank.")]
     [SerializeField]
     private float rotationSpeed = 1.0f;
+
+    private PhotonView photonView;
 
     #region InputHandling
 
@@ -52,10 +56,28 @@ public class TankMovement : MonoBehaviour
 
     #endregion
 
+    private void Awake()
+    {
+        photonView = this.gameObject.GetComponent<PhotonView>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        CameraWork camera = this.gameObject.GetComponent<CameraWork>();
+
+        try
+        {
+            if(photonView.IsMine)
+            {
+                camera.OnStartFollowing();
+            }
+        }
+
+        catch(Exception e)
+        {
+            Debug.Log(e.Message);
+        }
     }
 
     // Update is called once per frame

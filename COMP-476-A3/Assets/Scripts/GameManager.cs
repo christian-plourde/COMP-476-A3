@@ -8,6 +8,20 @@ using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    [Tooltip("The prefab that the player's will be controlling.")]
+    [SerializeField]
+    public GameObject tankPrefab;
+
+    private void Start()
+    {
+        if (tankPrefab == null)
+            Debug.Log("Tank Prefab reference is missing.");
+        else
+        {
+            PhotonNetwork.Instantiate(this.tankPrefab.name, new Vector3(5, 0.1f, 1), Quaternion.identity);
+        }
+    }
+
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene(0); //load the launcher scene when we leave the room

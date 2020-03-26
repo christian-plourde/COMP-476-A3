@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 6735426012148230963}
   - component: {fileID: 289260074}
   - component: {fileID: 7926625935775423103}
+  - component: {fileID: 2695215183862993042}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Tank
@@ -153,7 +154,7 @@ MonoBehaviour:
   height: 0.6
   heightSmoothLag: 0.3
   centerOffset: {x: 0, y: 2, z: 5}
-  followOnStart: 1
+  followOnStart: 0
 --- !u!114 &4251953289692910626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,7 +204,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 2695215183862993042}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -223,3 +224,18 @@ MonoBehaviour:
   projectile: {fileID: 8805894194064713240, guid: c37f218e820001647ab007a2af3fbca5,
     type: 3}
   firingPointOffset: {x: 0, y: 0.59, z: 0}
+--- !u!114 &2695215183862993042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6095075449549278756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
