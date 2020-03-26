@@ -19,14 +19,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if (tankPrefab == null)
-            Debug.Log("Tank Prefab reference is missing.");
-        else
+        if(TankMovement.LocalPlayerInstance == null)
         {
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-                PhotonNetwork.Instantiate(this.tankPrefab.name, new Vector3(5, 0.1f, 1), Quaternion.identity);
-            else 
+            if (tankPrefab == null)
+                Debug.Log("Tank Prefab reference is missing.");
+            else
+            {
                 PhotonNetwork.Instantiate(this.tankPrefab.name, new Vector3(-5, 0.1f, 1), Quaternion.identity);
+            }
         }
     }
 

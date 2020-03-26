@@ -45,7 +45,6 @@ public class Projectile : MonoBehaviour
         Move();
     }
 
-    [Photon.Pun.PunRPC]
     void OnTriggerEnter(Collider other)
     {
         //if i hit a wall, destroy that wall

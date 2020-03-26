@@ -20,6 +20,8 @@ public class TankMovement : MonoBehaviour
 
     private PhotonView photonView;
 
+    public static GameObject LocalPlayerInstance;
+
     #region InputHandling
 
     private void HandleInput()
@@ -59,6 +61,11 @@ public class TankMovement : MonoBehaviour
     private void Awake()
     {
         photonView = this.gameObject.GetComponent<PhotonView>();
+
+        if (photonView.IsMine)
+            TankMovement.LocalPlayerInstance = this.gameObject;
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Start is called before the first frame update
