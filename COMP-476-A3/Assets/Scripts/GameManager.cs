@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 using Photon.Pun;
 using Photon.Realtime;
@@ -12,14 +13,26 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     public GameObject tankPrefab;
 
+    [Tooltip("The UI text component that says which room you are in.")]
+    [SerializeField]
+    public Text roomText;
+
     private void Start()
     {
         if (tankPrefab == null)
             Debug.Log("Tank Prefab reference is missing.");
         else
         {
-            PhotonNetwork.Instantiate(this.tankPrefab.name, new Vector3(5, 0.1f, 1), Quaternion.identity);
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+                PhotonNetwork.Instantiate(this.tankPrefab.name, new Vector3(5, 0.1f, 1), Quaternion.identity);
+            else 
+                PhotonNetwork.Instantiate(this.tankPrefab.name, new Vector3(-5, 0.1f, 1), Quaternion.identity);
         }
+    }
+
+    private void Update()
+    {
+        roomText.text = "Connected to room: " + PhotonNetwork.CurrentRoom.Name + "\nPlayer Count: " + PhotonNetwork.CurrentRoom.PlayerCount;
     }
 
     public override void OnLeftRoom()

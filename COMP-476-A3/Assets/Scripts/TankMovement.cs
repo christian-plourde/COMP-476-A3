@@ -83,6 +83,7 @@ public class TankMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
+        if(photonView.IsMine)
+            HandleInput();
     }
 }

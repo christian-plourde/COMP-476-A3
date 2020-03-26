@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class TankAttack : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class TankAttack : MonoBehaviour
     [SerializeField]
     private Vector3 firingPointOffset;
 
+    private PhotonView photonView;
+
     #region Properties
 
     public float Health
@@ -27,6 +30,11 @@ public class TankAttack : MonoBehaviour
     #endregion
 
     #region InputHandling
+
+    private void Awake()
+    {
+        photonView = this.gameObject.GetComponent<PhotonView>();
+    }
 
     private void HandleInput()
     {
@@ -51,6 +59,7 @@ public class TankAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
+        if(photonView.IsMine)
+            HandleInput();
     }
 }
