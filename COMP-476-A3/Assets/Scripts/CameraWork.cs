@@ -68,7 +68,7 @@ public class CameraWork : MonoBehaviour
 
     private void Apply()
     {
-        Vector3 targetCenter = transform.position + centerOffset;
+        Vector3 targetCenter = transform.position;
         float originalTargetAngle = transform.eulerAngles.y;
         float currentAngle = cameraTransform.eulerAngles.y;
         float targetAngle = originalTargetAngle;
