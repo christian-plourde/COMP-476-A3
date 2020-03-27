@@ -11,11 +11,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     [Tooltip("The prefab that the player's will be controlling.")]
     [SerializeField]
-    public GameObject tankPrefab;
+    private GameObject tankPrefab;
+
+    [Tooltip("The prefab that represents the level. For destruction it must be instantiated by Photon.")]
+    [SerializeField]
+    private GameObject levelPrefab; 
 
     [Tooltip("The UI text component that says which room you are in.")]
     [SerializeField]
-    public Text roomText;
+    private Text roomText;
 
     private void Start()
     {
@@ -28,6 +32,11 @@ public class GameManager : MonoBehaviourPunCallbacks
                 PhotonNetwork.Instantiate(this.tankPrefab.name, new Vector3(-5, 0.1f, 1), Quaternion.identity);
             }
         }
+
+        if (levelPrefab == null)
+            Debug.Log("Level Prefab is missing.");
+        else
+            PhotonNetwork.Instantiate(this.levelPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     private void Update()

@@ -50,7 +50,7 @@ public class Projectile : MonoBehaviour
         //if i hit a wall, destroy that wall
         if(other.tag == "Wall")
         {
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<Wall>().Remove();
             Destroy(this.gameObject);
         }
     }
