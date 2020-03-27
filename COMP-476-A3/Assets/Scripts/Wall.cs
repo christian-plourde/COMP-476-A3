@@ -7,6 +7,11 @@ public class Wall : MonoBehaviour
 {
     PhotonView photonView;
 
+    public PhotonView PhotonView
+    {
+        get { return photonView; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +24,11 @@ public class Wall : MonoBehaviour
         
     }
 
-    public void Remove()
+    [PunRPC]
+    public void Remove(PhotonMessageInfo info)
     {
-        PhotonNetwork.Destroy(this.gameObject);
+        //Debug.Log(info.Sender + " " + info.photonView);
+        
+        Destroy(this.gameObject);
     }
 }

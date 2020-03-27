@@ -35,13 +35,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (levelPrefab == null)
             Debug.Log("Level Prefab is missing.");
+
         else
             PhotonNetwork.Instantiate(this.levelPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     private void Update()
     {
-        roomText.text = "Connected to room: " + PhotonNetwork.CurrentRoom.Name + "\nPlayer Count: " + PhotonNetwork.CurrentRoom.PlayerCount;
+        roomText.text = "Connected to room: " + PhotonNetwork.CurrentRoom.Name + "\nPlayer Count: " + PhotonNetwork.CurrentRoom.PlayerCount + "\n" + PhotonNetwork.NickName + (PhotonNetwork.IsMasterClient ? " MASTER CLIENT" : " SLAVE");
     }
 
     public override void OnLeftRoom()
