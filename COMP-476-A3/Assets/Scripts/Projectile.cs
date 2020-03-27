@@ -49,7 +49,7 @@ public class Projectile : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //if i hit a wall, destroy that wall
-        if(other.tag == "Wall")
+        if (other.tag == "Wall")
         {
             other.gameObject.GetComponent<Wall>().PhotonView.RPC("Remove", RpcTarget.AllBuffered);
         }

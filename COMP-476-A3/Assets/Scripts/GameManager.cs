@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (levelPrefab == null)
             Debug.Log("Level Prefab is missing.");
 
-        else
+        else if(PhotonNetwork.IsMasterClient)
             PhotonNetwork.Instantiate(this.levelPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
     }
 

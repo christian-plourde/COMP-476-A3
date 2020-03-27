@@ -27,8 +27,8 @@ public class Wall : MonoBehaviour
     [PunRPC]
     public void Remove(PhotonMessageInfo info)
     {
-        //Debug.Log(info.Sender + " " + info.photonView);
-        
+        //Debug.Log("Reciever: " + photonView.Owner.NickName);
+
         Destroy(this.gameObject);
     }
 }
