@@ -66,7 +66,8 @@ public class Projectile : MonoBehaviour
         {
             if(other.gameObject.GetComponent<TankAttack>() != tank)
             {
-                other.gameObject.GetComponent<TankAttack>().TakeDamage(damage);
+                Debug.Log(tank.PhotonView.Owner.NickName + " hit " + other.gameObject.GetComponent<TankAttack>().PhotonView.Owner.NickName);
+                other.gameObject.GetComponent<TankAttack>().PhotonView.RPC("TakeDamage", other.gameObject.GetComponent<TankAttack>().PhotonView.Owner, damage);
                 Destroy(this.gameObject);
             } 
         }       

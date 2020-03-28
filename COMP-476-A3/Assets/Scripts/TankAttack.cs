@@ -30,6 +30,11 @@ public class TankAttack : MonoBehaviour
         set { health = value; }
     }
 
+    public PhotonView PhotonView
+    {
+        get { return photonView; }
+    }
+
     #endregion
 
     #region InputHandling
@@ -70,8 +75,13 @@ public class TankAttack : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        if(photonView.IsMine)
+        {
+            Debug.Log(photonView.Owner.NickName + " takes " + damage + " damage.");
+            health -= damage;
+        }       
     }
 }

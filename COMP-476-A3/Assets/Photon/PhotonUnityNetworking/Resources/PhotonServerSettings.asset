@@ -36,5 +36,6 @@ MonoBehaviour:
   - RespawnSpaceship
   - OnTriggerEnter
   - Remove
+  - TakeDamage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
