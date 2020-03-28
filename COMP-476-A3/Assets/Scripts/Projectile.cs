@@ -19,6 +19,13 @@ public class Projectile : MonoBehaviour
 
     private float timeAlive = 0.0f;
 
+    private TankAttack tank; //the tank that shot the projectile
+
+    public TankAttack Tank
+    {
+        set { tank = value; }
+    }
+
     private void CheckLifeTimer()
     {
         timeAlive += Time.deltaTime;
@@ -52,8 +59,16 @@ public class Projectile : MonoBehaviour
         if (other.tag == "Wall")
         {
             other.gameObject.GetComponent<Wall>().PhotonView.RPC("Remove", RpcTarget.MasterClient);
+            Destroy(this.gameObject);
         }
 
-        Destroy(this.gameObject);
+        if(other.tag == "Tank")
+        {
+            if(other.gameObject.GetComponent<TankAttack>() != tank)
+            {
+                other.gameObject.GetComponent<TankAttack>().TakeDamage(damage);
+                Destroy(this.gameObject);
+            } 
+        }       
     }
 }

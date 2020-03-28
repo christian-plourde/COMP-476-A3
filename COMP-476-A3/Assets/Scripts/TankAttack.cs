@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class TankAttack : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class TankAttack : MonoBehaviour
     private Vector3 firingPointOffset;
 
     private PhotonView photonView;
+
+    private Text healthText;
 
     #region Properties
 
@@ -46,6 +49,7 @@ public class TankAttack : MonoBehaviour
     {
         GameObject bullet = Instantiate(projectile, this.transform.position + firingPointOffset, this.transform.rotation);
         bullet.transform.Rotate(Vector3.up, 90.0f);
+        bullet.GetComponent<Projectile>().Tank = this;
     }
 
     #endregion
@@ -53,13 +57,21 @@ public class TankAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        healthText = GameObject.FindGameObjectWithTag("HealthIndicator").GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
+        {
+            healthText.text = health.ToString();
             HandleInput();
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
     }
 }
