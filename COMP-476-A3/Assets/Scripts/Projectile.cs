@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
         //if i hit a wall, destroy that wall
         if (other.tag == "Wall")
         {
-            other.gameObject.GetComponent<Wall>().PhotonView.RPC("Remove", RpcTarget.AllBuffered);
+            other.gameObject.GetComponent<Wall>().PhotonView.RPC("Remove", RpcTarget.MasterClient);
         }
 
         Destroy(this.gameObject);

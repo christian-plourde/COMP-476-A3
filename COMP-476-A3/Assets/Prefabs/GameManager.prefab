@@ -45,6 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tankPrefab: {fileID: 6095075449549278756, guid: a0fca181e0dad064bae369d3ddfb6af5,
     type: 3}
-  levelPrefab: {fileID: 9168645876338248881, guid: 08a18bb4e30c7ab4282518f7c2d6628a,
+  wallPrefab: {fileID: 6335645207252703906, guid: 1f61ee712e2172243b26a62145fba479,
+    type: 3}
+  testCubePrefab: {fileID: 6981219269511424220, guid: a197e6188932e5a42b631a4815a27809,
     type: 3}
   roomText: {fileID: 0}

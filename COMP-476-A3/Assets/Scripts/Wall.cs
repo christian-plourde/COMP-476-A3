@@ -28,7 +28,6 @@ public class Wall : MonoBehaviour
     public void Remove(PhotonMessageInfo info)
     {
         //Debug.Log("Reciever: " + photonView.Owner.NickName);
-
-        Destroy(this.gameObject);
+        PhotonNetwork.Destroy(this.gameObject);
     }
 }
