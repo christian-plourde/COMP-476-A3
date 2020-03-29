@@ -47,6 +47,11 @@ MonoBehaviour:
     type: 3}
   wallPrefab: {fileID: 6335645207252703906, guid: 1f61ee712e2172243b26a62145fba479,
     type: 3}
-  testCubePrefab: {fileID: 6981219269511424220, guid: a197e6188932e5a42b631a4815a27809,
+  zombieTankPrefab: {fileID: 5301435815445506135, guid: 81d513431db38154e9172c54adb3bdb7,
     type: 3}
   roomText: {fileID: 0}
+  spawnLocationPositions:
+  - {x: -5, y: 0.1, z: 1}
+  - {x: 7.25, y: 0.1, z: 1.25}
+  - {x: 8, y: 0.1, z: -8}
+  - {x: -8, y: 0.1, z: -4}

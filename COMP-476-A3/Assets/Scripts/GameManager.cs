@@ -9,7 +9,7 @@ using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    [Tooltip("The prefab that the player's will be controlling.")]
+    [Tooltip("The prefab that the players will be controlling.")]
     [SerializeField]
     private GameObject tankPrefab;
 
@@ -17,27 +17,56 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject wallPrefab;
 
+    [Tooltip("The prefab that represents the zombie tanks.")]
+    [SerializeField]
+    private GameObject zombieTankPrefab;
+
     [Tooltip("The UI text component that says which room you are in.")]
     [SerializeField]
     private Text roomText;
 
+    [Tooltip("The possible spawn locations for tanks")]
+    public List<Vector3> spawnLocationPositions; //this will be populated in editor with locations where tanks can spawn
+
+    private List<SpawnLocation> spawnLocations; //this will hold the positions for spawn as well as indicate if it has already been taken
+
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+
+        spawnLocations = new List<SpawnLocation>();
+
+        foreach(Vector3 p in spawnLocationPositions)
+        {
+            spawnLocations.Add(new SpawnLocation(p));
+        }
     }
 
     private void Start()
     {
+        //spawning in the zombie tanks
+        if (zombieTankPrefab == null)
+            Debug.Log("Zombie tank prefab is missing");
+
+        else if(PhotonNetwork.IsMasterClient)
+        {
+            //spawn in two zombie tanks if master client
+            PhotonNetwork.Instantiate(this.zombieTankPrefab.name, SpawnLocation.GetFreeLocation(spawnLocations), Quaternion.identity);
+            PhotonNetwork.Instantiate(this.zombieTankPrefab.name, SpawnLocation.GetFreeLocation(spawnLocations), Quaternion.identity);
+        }
+
+        //spawning in the tanks for the players
         if(TankMovement.LocalPlayerInstance == null)
         {
             if (tankPrefab == null)
                 Debug.Log("Tank Prefab reference is missing.");
             else
             {
-                PhotonNetwork.Instantiate(this.tankPrefab.name, new Vector3(-5, 0.1f, 1), Quaternion.identity);
+                PhotonNetwork.Instantiate(this.tankPrefab.name, SpawnLocation.GetFreeLocation(spawnLocations), Quaternion.identity);
             }
         }
 
+        //spawning in the destructible walls
         if (wallPrefab == null)
             Debug.Log("Level Prefab is missing.");
 
@@ -135,39 +164,4 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
     }
-
-    /*
-    public void LoadArena()
-    {
-        if (!PhotonNetwork.IsMasterClient)
-            Debug.LogError("Photon Network: Trying to load a level but we are not the master client.");
-        else
-        {
-            Debug.Log("Loading level...");
-            PhotonNetwork.LoadLevel("TankBattle");
-        }
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log(newPlayer.NickName + " entered the room.");
-
-        if(PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log(newPlayer.NickName + " is master client.");
-            LoadArena();
-        }
-    }
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        Debug.Log(otherPlayer.NickName + " left the room.");
-
-        if(PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log(otherPlayer.NickName + " is master client.");
-            LoadArena();
-        }
-    }
-    */
 }
