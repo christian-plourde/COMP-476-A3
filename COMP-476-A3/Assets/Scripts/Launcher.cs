@@ -21,7 +21,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     bool isConnecting;
 
-
     string gameVersion = "1"; //the game version
 
     private void Awake()

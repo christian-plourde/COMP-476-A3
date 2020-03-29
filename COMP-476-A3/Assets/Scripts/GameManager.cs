@@ -21,19 +21,29 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject zombieTankPrefab;
 
+    [Tooltip("The prefab that represents a power up.")]
+    [SerializeField]
+    private GameObject powerUpPrefab;
+
     [Tooltip("The UI text component that says which room you are in.")]
     [SerializeField]
     private Text roomText;
 
     [Tooltip("The possible spawn locations for tanks")]
-    public List<Vector3> spawnLocationPositions; //this will be populated in editor with locations where tanks can spawn
+    [SerializeField]
+    private List<Vector3> spawnLocationPositions; //this will be populated in editor with locations where tanks can spawn
 
     private List<SpawnLocation> spawnLocations; //this will hold the positions for spawn as well as indicate if it has already been taken
+
+    [Tooltip("The possible spawn locations for power-ups")]
+    [SerializeField]
+    private List<Vector3> powerUpSpawnLocationPositions; //this will be populated in editor with locations where power ups can spawn
 
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
 
+        //load all the spawn locations for tanks and power ups
         spawnLocations = new List<SpawnLocation>();
 
         foreach(Vector3 p in spawnLocationPositions)
@@ -53,6 +63,19 @@ public class GameManager : MonoBehaviourPunCallbacks
             //spawn in two zombie tanks if master client
             PhotonNetwork.Instantiate(this.zombieTankPrefab.name, SpawnLocation.GetFreeLocation(spawnLocations), Quaternion.identity);
             PhotonNetwork.Instantiate(this.zombieTankPrefab.name, SpawnLocation.GetFreeLocation(spawnLocations), Quaternion.identity);
+        }
+
+        //spawning in the powerups
+        if (powerUpPrefab == null)
+            Debug.Log("Power up prefab is missing");
+
+        else if(PhotonNetwork.IsMasterClient)
+        {
+            //spawn in all the power ups if master client
+            foreach(Vector3 p in powerUpSpawnLocationPositions)
+            {
+                PhotonNetwork.Instantiate(this.powerUpPrefab.name, p, Quaternion.identity);
+            }
         }
 
         //spawning in the tanks for the players

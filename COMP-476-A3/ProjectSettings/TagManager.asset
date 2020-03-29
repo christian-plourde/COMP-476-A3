@@ -8,6 +8,7 @@ TagManager:
   - Tank
   - HealthIndicator
   - ZombieTank
+  - PowerUp
   layers:
   - Default
   - TransparentFX
