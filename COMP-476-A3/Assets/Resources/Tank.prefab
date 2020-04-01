@@ -170,6 +170,8 @@ MonoBehaviour:
   advanceSpeed: 2
   reverseSpeed: 1
   rotationSpeed: 40
+  powerUpTimerLength: 30
+  speedBoostMultiplier: 2
 --- !u!54 &6735426012148230963
 Rigidbody:
   m_ObjectHideFlags: 0

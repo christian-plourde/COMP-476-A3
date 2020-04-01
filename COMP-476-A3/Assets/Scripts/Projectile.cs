@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
     {
         timeAlive += Time.deltaTime;
         if (timeAlive >= lifeSpan)
-            Destroy(this.gameObject);
+            PhotonNetwork.Destroy(this.gameObject);
     }
 
     private void Move()

@@ -18,9 +18,26 @@ public class TankMovement : MonoBehaviour
     [SerializeField]
     private float rotationSpeed = 1.0f;
 
+    [Tooltip("The timer length for the speed boost power up in seconds.")]
+    [SerializeField]
+    private float powerUpTimerLength = 30.0f;
+
+    [Tooltip("The multiply factor for speed boost when it is active.")]
+    [SerializeField]
+    private float speedBoostMultiplier = 2.0f;
+
     private PhotonView photonView;
 
     public static GameObject LocalPlayerInstance;
+
+    private float currentPowerUpTime = 0.0f;
+
+    private bool powerUpActive = false;
+
+    public PhotonView PhotonView
+    {
+        get { return photonView; }
+    }
 
     #region InputHandling
 
@@ -38,22 +55,49 @@ public class TankMovement : MonoBehaviour
 
     private void MoveForward()
     {
-        this.transform.position += advanceSpeed * this.transform.forward * Time.deltaTime;
+        this.transform.position += advanceSpeed * (CheckPowerUpTimer() ? speedBoostMultiplier : 1.0f) * this.transform.forward * Time.deltaTime;
     }
 
     private void MoveBackward()
     {
-        this.transform.position += reverseSpeed * this.transform.forward * -1.0f * Time.deltaTime;
+        this.transform.position += reverseSpeed * (CheckPowerUpTimer() ? speedBoostMultiplier : 1.0f) * this.transform.forward * -1.0f * Time.deltaTime;
     }
 
     private void RotateRight()
     {
-        this.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        this.transform.Rotate(Vector3.up, rotationSpeed * (CheckPowerUpTimer() ? speedBoostMultiplier : 1.0f) * Time.deltaTime);
     }
 
     private void RotateLeft()
     {
-        this.transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+        this.transform.Rotate(Vector3.up, -rotationSpeed * (CheckPowerUpTimer() ? speedBoostMultiplier : 1.0f) * Time.deltaTime);
+    }
+
+    #endregion
+
+
+    #region PowerUps
+    private bool CheckPowerUpTimer()
+    {
+        if(currentPowerUpTime < powerUpTimerLength && powerUpActive)
+        {
+            currentPowerUpTime += Time.deltaTime;
+            powerUpActive = true;
+            return true;
+        }
+
+        else
+        {
+            currentPowerUpTime = 0.0f;
+            powerUpActive = false;
+            return false;
+        }
+    }
+
+    [PunRPC]
+    public void ActivatePowerUp()
+    {
+        powerUpActive = true;
     }
 
     #endregion
