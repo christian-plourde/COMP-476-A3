@@ -54,7 +54,7 @@ public class TankAttack : MonoBehaviour
 
     private void FireRound()
     {
-        GameObject bullet = Instantiate(projectile, this.transform.position + firingPointOffset, this.transform.rotation);
+        GameObject bullet = PhotonNetwork.Instantiate(this.projectile.name, this.transform.position + firingPointOffset, this.transform.rotation);
         bullet.transform.Rotate(Vector3.up, 90.0f);
         bullet.GetComponent<Projectile>().Tank = this;
     }

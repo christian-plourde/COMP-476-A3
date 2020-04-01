@@ -59,7 +59,7 @@ public class Projectile : MonoBehaviour
         if (other.tag == "Wall")
         {
             other.gameObject.GetComponent<Wall>().PhotonView.RPC("Remove", RpcTarget.MasterClient);
-            Destroy(this.gameObject);
+            PhotonNetwork.Destroy(this.gameObject);
         }
 
         if(other.tag == "Tank")
@@ -68,7 +68,7 @@ public class Projectile : MonoBehaviour
             {
                 Debug.Log(tank.PhotonView.Owner.NickName + " hit " + other.gameObject.GetComponent<TankAttack>().PhotonView.Owner.NickName);
                 other.gameObject.GetComponent<TankAttack>().PhotonView.RPC("TakeDamage", other.gameObject.GetComponent<TankAttack>().PhotonView.Owner, damage);
-                Destroy(this.gameObject);
+                PhotonNetwork.Destroy(this.gameObject);
             } 
         }       
     }
