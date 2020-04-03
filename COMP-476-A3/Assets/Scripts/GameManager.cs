@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Net;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -175,7 +176,24 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        roomText.text = "Connected to room: " + PhotonNetwork.CurrentRoom.Name + "\nPlayer Count: " + PhotonNetwork.CurrentRoom.PlayerCount + "\n" + PhotonNetwork.NickName + (PhotonNetwork.IsMasterClient ? " MASTER CLIENT" : " SLAVE");
+
+        string ip = Dns.GetHostByName(Dns.GetHostName()).AddressList[1].ToString();
+
+        string toShow = ip.Substring(ip.Length / 2);
+        int toHideLength = ip.Length - ip.Length / 2;
+
+        string toHide = string.Empty;
+
+        for(int i = 0; i < toHideLength; i++)
+        {
+            toHide += "*";
+        }
+
+        roomText.text = "Connected to room: " + PhotonNetwork.CurrentRoom.Name +
+            "\nPlayer Count: " + PhotonNetwork.CurrentRoom.PlayerCount +
+            "\n" + PhotonNetwork.NickName + (PhotonNetwork.IsMasterClient ? " MASTER CLIENT" : " SLAVE") +
+            "\nCurrent Time: " + System.DateTime.Now.ToShortTimeString() +
+            "\nIP: " + toHide + toShow;
     }
 
     public override void OnLeftRoom()

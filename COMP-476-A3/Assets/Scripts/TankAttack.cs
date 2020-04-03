@@ -22,6 +22,8 @@ public class TankAttack : MonoBehaviour
 
     private Text healthText;
 
+    private Text deathMessage;
+
     #region Properties
 
     public float Health
@@ -63,6 +65,8 @@ public class TankAttack : MonoBehaviour
     void Start()
     {
         healthText = GameObject.FindGameObjectWithTag("HealthIndicator").GetComponent<Text>();
+        deathMessage = GameObject.FindGameObjectWithTag("DeathMessage").GetComponent<Text>();
+        deathMessage.enabled = false;
     }
 
     // Update is called once per frame
@@ -82,6 +86,14 @@ public class TankAttack : MonoBehaviour
         {
             Debug.Log(photonView.Owner.NickName + " takes " + damage + " damage.");
             health -= damage;
-        }       
+
+            //check if player has lost and destroy his tank. tanks are for winners only
+            if (health <= 0)
+            {
+                deathMessage.enabled = true;
+                PhotonNetwork.Destroy(this.gameObject);
+            }
+                
+        }
     }
 }

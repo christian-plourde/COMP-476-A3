@@ -9,6 +9,7 @@ TagManager:
   - HealthIndicator
   - ZombieTank
   - PowerUp
+  - DeathMessage
   layers:
   - Default
   - TransparentFX
