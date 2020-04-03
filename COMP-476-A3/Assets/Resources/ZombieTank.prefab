@@ -228,7 +228,7 @@ MonoBehaviour:
   attackRange: 2
   attentionSpan: 5
   fireRate: 1
-  wanderRadius: 0.5
+  wanderRadius: 1
 --- !u!114 &9143045006209382988
 MonoBehaviour:
   m_ObjectHideFlags: 0
