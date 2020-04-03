@@ -97,10 +97,12 @@ GameObject:
   m_Component:
   - component: {fileID: 9207928373249006148}
   - component: {fileID: 2090924896111949514}
-  - component: {fileID: 2090924895185784568}
   - component: {fileID: 4647010408794295616}
   - component: {fileID: 2090924895151236185}
   - component: {fileID: 4063134114773726945}
+  - component: {fileID: 5019138555661292174}
+  - component: {fileID: -2118976012034686956}
+  - component: {fileID: 9143045006209382988}
   m_Layer: 0
   m_Name: ZombieTank
   m_TagString: ZombieTank
@@ -136,23 +138,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.085255, y: 4.1335716, z: 11.495768}
   m_Center: {x: 0.0000007947286, y: 2.1672227, z: -0.8972116}
---- !u!114 &2090924895185784568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5301435815445506135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45923161860783f4aa167bceab2e8eb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 2
-  height: 0.6
-  heightSmoothLag: 0.3
-  centerOffset: {x: 0, y: 2, z: 5}
-  followOnStart: 0
 --- !u!54 &4647010408794295616
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -206,3 +191,57 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
+--- !u!195 &5019138555661292174
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301435815445506135}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 1
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &-2118976012034686956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301435815445506135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff20363988a66b6448ae2a889aeacc87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 2
+  attentionSpan: 5
+  fireRate: 1
+  wanderRadius: 0.5
+--- !u!114 &9143045006209382988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301435815445506135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0bc95d3f9af5da4e954128a5e967384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  projectile: {fileID: 8805894194064713240, guid: c37f218e820001647ab007a2af3fbca5,
+    type: 3}
+  firingPointOffset: {x: 0, y: 0.59, z: 0}

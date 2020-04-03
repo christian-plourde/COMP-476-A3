@@ -50,7 +50,7 @@ public class TankAttack : MonoBehaviour
             FireRound();
     }
 
-    private void FireRound()
+    public void FireRound()
     {
         GameObject bullet = PhotonNetwork.Instantiate(this.projectile.name, this.transform.position + firingPointOffset, this.transform.rotation);
         bullet.transform.Rotate(Vector3.up, 90.0f);
@@ -68,7 +68,7 @@ public class TankAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && this.tag == "Tank")
         {
             healthText.text = health.ToString();
             HandleInput();
